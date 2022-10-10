@@ -12,6 +12,33 @@ namespace Assignment_7_1
             DateTime birthdate = GetBirthdateFromCpr(cpr);
             Console.WriteLine("Birthdate: " + birthdate);
             Console.WriteLine("Age: " + GetAge(birthdate));
+
+            List<Person> persons = new()
+            {
+                new Person("0101223999", "E"),  // 01.01.1922
+                new Person("0101224000", "M"),  // 01.01.2022
+                new Person("0101374999", "F"),  // 01.01.1937
+                new Person("0101015000", "I"),  // 01.01.2001
+                new Person("0101995999", "D"),  // 01.01.1899
+                new Person("0101006000", "H"),  // 01.01.2000
+                new Person("0101986999", "C"),  // 01.01.1898
+                new Person("0101207000", "L"),  // 01.01.2020
+                new Person("0101977999", "B"),  // 01.01.1897
+                new Person("0101108000", "K"),  // 01.01.2010
+                new Person("0101968999", "A"),  // 01.01.1896
+                new Person("0101029000", "J"),  // 01.01.2002
+                new Person("0101999999", "G")   // 01.01.1999
+            };
+
+            persons.Sort(new Comparison<Person>((a, b) =>
+            {
+                return GetBirthdateFromCpr(a.Cpr).CompareTo(GetBirthdateFromCpr(b.Cpr));
+            }));
+
+            foreach (var person in persons)
+            {
+                Console.WriteLine($"{person.Cpr}: {person.Name}");
+            }
         }
 
         static DateTime GetBirthdateFromCpr(string? cpr)
