@@ -9,10 +9,12 @@ namespace Assignment_7_1
             Console.Write("Enter cpr (10 digits): ");
             string? cpr = Console.ReadLine();
 
-            Console.WriteLine("Age = " + GetAgeFromCpr(cpr));
+            DateTime birthdate = GetBirthdateFromCpr(cpr);
+            Console.WriteLine("Birthdate: " + birthdate);
+            Console.WriteLine("Age: " + GetAge(birthdate));
         }
 
-        static int GetAgeFromCpr(string? cpr)
+        static DateTime GetBirthdateFromCpr(string? cpr)
         {
             if (cpr == null || cpr.Length != 10)
             {
@@ -24,7 +26,7 @@ namespace Assignment_7_1
                 && int.TryParse(cpr.Substring(6, 4), out int serial)))
                 throw new ArgumentException("Not a cpr-number");
 
-            return GetAge(birthDay, birthMonth, GetTrueYearFromCpr(birthYear, serial));
+            return new DateTime(GetTrueYearFromCpr(birthYear, serial), birthMonth, birthDay);
         }
 
         private static int GetTrueYearFromCpr(int year, int serial)
@@ -43,12 +45,12 @@ namespace Assignment_7_1
             }
         }
 
-        private static int GetAge(int birthDay, int birthMonth, int birthYear)
+        private static int GetAge(DateTime birthdate)
         {
             DateTime today = DateTime.Now;
 
-            int age = today.Year - birthYear;
-            if ((today.Month < birthMonth) || (today.Month == birthMonth && today.Day < birthDay))
+            int age = today.Year - birthdate.Year;
+            if (today < birthdate.AddYears(age))
             {
                 age--;
             }
